@@ -1,0 +1,38 @@
+===================================================================
+Javis - 2.0.0W
+===================================================================
+Javis is a simple Windows Service created for a VNC project (called JAVIS-GUI).
+
+Its purpose is to obtain some information from the computer and create
+a record in a table in the database, such information: user name,
+IP, computer name, type of user session (console or RDP), session status (logged on, logged off)
+and its version.
+
+
+===================================================================
+Compile and binaries
+===================================================================
+IDE - Visual Studio Community 2019 Version 16.6.0
+Windows SDK 10.0.18362.1
+
+Environment
+WINDOWS 10 (It has not been tested on other versions of Windows!!)
+
+==========
+C Files
+==========
+base.h - struct computer
+db.h - database methods
+javis.h - global variables
+log.h - log methods
+network.h - network methods
+service.h - services methods for a service execution
+session.h - users session events handler methods
+
+db.c 
+log.c 
+main.c - main method, register/unregister service.
+network.c 
+service.c 
+session.c 
+start.c

@@ -36,7 +36,7 @@ VOID ReportSvcStatus(DWORD dwCurrentState, DWORD dwWin32ExitCode, DWORD dwWaitHi
     else
         g_ServiceStatus.dwCheckPoint = dwCheckPoint++;
 
-    // report the status of the service to the SCM.
+    //report the status of the service to the SCM.
     if (!SetServiceStatus(g_StatusHandle, &g_ServiceStatus)) {
         LogErro(szServiceModuleName, L"Error reporting status to SCM method error (ReportSvcStatus)");
     }
@@ -45,13 +45,13 @@ VOID ReportSvcStatus(DWORD dwCurrentState, DWORD dwWin32ExitCode, DWORD dwWaitHi
 
 /*
     Service main method
-    Veja: https://docs.microsoft.com/en-us/windows/win32/services/service-servicemain-function
+    See: https://docs.microsoft.com/en-us/windows/win32/services/service-servicemain-function
  */
 VOID WINAPI ServiceMain(DWORD argc, LPTSTR* argv) {
 
     Start();
 
-    // clear g_ServiceStatus memory block to avoid errors...
+    //clear g_ServiceStatus memory block to avoid errors...
     ZeroMemory(&g_ServiceStatus, sizeof(g_ServiceStatus));
 
     g_ServiceStatus.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
@@ -62,26 +62,26 @@ VOID WINAPI ServiceMain(DWORD argc, LPTSTR* argv) {
     g_ServiceStatus.dwWaitHint = 0;
 
 
-    // registering the Control Handler in the SCM.
+    //registering the Control Handler in the SCM.
     g_StatusHandle = RegisterServiceCtrlHandlerExW(szwServiceName, CtrlHandlerEx, NULL);
 
-    // if g_StatusHandler value is NULL, the RegisterServiceCtrlHandlerEx failed
+    //if g_StatusHandler value is NULL, the RegisterServiceCtrlHandlerEx failed
     if (g_StatusHandle == NULL) {
         LogErro(szServiceModuleName, L"ServiceMain error registering service with RegisterServiceCtrlHandlerExW");
         return;
     }
 
-    // notifying the SCM of the start of the service...
+    //notifying the SCM of the start of the service...
     ReportSvcStatus(SERVICE_START_PENDING, NO_ERROR, 0);
 
 
     //====== Running the necessary tasks to start the service ======//
 
 
-    // creates a stop event to notify the ServiceWorkerThread when the shutting down event come by the Control Handler.
+    //creates a stop event to notify the ServiceWorkerThread when the shutting down event come by the Control Handler.
     g_ServiceStopEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
 
-    // if the event is not created, something has failed... so it cannot proceed.
+    //if the event is not created, something has failed... so it cannot proceed.
     if (g_ServiceStopEvent == NULL) {
         
         // reports to the SCM that the service has stopped...
@@ -91,16 +91,16 @@ VOID WINAPI ServiceMain(DWORD argc, LPTSTR* argv) {
 
     ReportSvcStatus(SERVICE_RUNNING, NO_ERROR, 0);
 
-    // starting the ServiceWorkerThread.
+    //starting the ServiceWorkerThread.
     HANDLE hThread = CreateThread(NULL, 0, ServiceWorkerThread, NULL, 0, NULL);
 
-    // waiting until the Service Worker Thread terminates, indicating that the service needs to terminate.
+    //waiting until the Service Worker Thread terminates, indicating that the service needs to terminate.
     WaitForSingleObject(hThread, INFINITE);
 
-    // clear the handler
+    //clear the handler
     CloseHandle(g_ServiceStopEvent);
 
-    // notifying the SCM that the service has stopped.
+    //notifying the SCM that the service has stopped.
     ReportSvcStatus(SERVICE_STOPPED, NO_ERROR, 0);
 
 }
@@ -114,7 +114,7 @@ DWORD WINAPI CtrlHandlerEx(DWORD dwControl, DWORD dwEventType, LPVOID lpEventDat
 
     switch (dwControl) {
 
-    //The service does not support Interrogate, but the documentation asks us to return NO_ERROR.
+    //the service does not support Interrogate, but the documentation asks us to return NO_ERROR.
     case SERVICE_CONTROL_INTERROGATE:
         return NO_ERROR;
 
@@ -203,14 +203,14 @@ DWORD WINAPI ServiceWorkerThread(LPVOID lpParam) {
     BOOL bConnected = 0;
     short sCount = 0;
 
-    // tries for 10 seconds to check the network connection...
+    //tries for 10 seconds to check the network connection...
     while (!bConnected && sCount < 50 && !(WaitForSingleObject(g_ServiceStopEvent, 0) == WAIT_OBJECT_0)) {
         bConnected = IsConnected();
         sCount++;
         Sleep(200);
     }
 
-    //If the computer is connected, the stComputer structure is filled in and sent to the database
+    //if the computer is connected, the stComputer structure is filled in and sent to the database
     if (bConnected) {
 
         stComputer.iServiceStatus = 1;

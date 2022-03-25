@@ -31,10 +31,10 @@ typedef struct computer {
 	//computer name, e.g.: PC001
 	WCHAR szComputerName[MAX_COMPUTERNAME_LENGTH + 1];
 
-	// current IP4 used by the computer
+	//current IP4 used by the computer
 	WCHAR szIP4[IP4_STRING_SIZE];
 
-	//Was the record created by a user? (isManual = 1), if the record was created by the service (isManual = 0)
+	//was the record created by a user? (isManual = 1), if the record was created by the service (isManual = 0)
 	char isManual;
 
 } computer;

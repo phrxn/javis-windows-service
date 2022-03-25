@@ -92,10 +92,10 @@ VOID LogWinApi(const WCHAR* module, DWORD errorMessageID, const WCHAR* format, .
 
 static VOID LogPrint(int LOG_LEVEL, const WCHAR* module, const WCHAR* format, va_list args) {
 
-#ifndef TESTE 
+#ifndef TEST
         if (LOG_LEVEL < iLogLevel)
                 return;
-#endif // !TESTE
+#endif // !TEST
 
     WCHAR szLogMsg[BUFFER_LOG_SIZE];
     wmemset(szLogMsg, L'\0', BUFFER_LOG_SIZE);
@@ -138,7 +138,7 @@ static VOID LogPrint(int LOG_LEVEL, const WCHAR* module, const WCHAR* format, va
 
     TextLogFormat(szLogMsg, szType, module, format, args);
 
-#ifndef TESTE
+#ifndef TEST
     FILE* pFileLog = NULL;
 
     errno_t open = _wfopen_s(&pFileLog, szwLogFilePath, L"a+");
@@ -149,7 +149,7 @@ static VOID LogPrint(int LOG_LEVEL, const WCHAR* module, const WCHAR* format, va
     }
 #else
     wprintf(szBufferMask, szLogMsg);
-#endif // !TESTE
+#endif // !TEST
 
 
 

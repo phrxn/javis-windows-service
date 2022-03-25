@@ -140,7 +140,7 @@ SQLRETURN SQLPrepareComputer(SQLHANDLE* sqlstatementhandle) {
 	retcode = SQLBindParameter(*sqlstatementhandle, 7, SQL_PARAM_INPUT, SQL_C_BIT, SQL_BIT, 0, 0, &stComputer.isManual, 0, NULL);
 	retcode = SQLBindParameter(*sqlstatementhandle, 8, SQL_PARAM_INPUT, SQL_C_WCHAR, SQL_VARCHAR, (wcslen(version) + 1), 0, version, 0, &cbValue);
 
-	retcode = SQLPrepareW(*sqlstatementhandle, L"INSERT INTO dbo.vnc3 (statusServico, statusComputador, tipoSessao, usuario, computador, ip, manual, dataLogin, versao) VALUES (?, ?, ?, ?, ?, ?, ?, GETDATE(), ?)", SQL_NTS);
+	retcode = SQLPrepareW(*sqlstatementhandle, L"INSERT INTO dbo.vnc3 (serviceStatus, computerStatus, session, userName, computerName, ip4, isManual, dateLogin, version) VALUES (?, ?, ?, ?, ?, ?, ?, GETDATE(), ?)", SQL_NTS);
 
 	return retcode;
 }

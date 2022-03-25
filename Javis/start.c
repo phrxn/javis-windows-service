@@ -1,10 +1,10 @@
 #include "javis.h"
 
 
-/* root directory where the service executable is, e.g.: C/pasta/ <- both slashs are backslashs */
+//root directory where the service executable is, e.g.: C/pasta/ <- both slashs are backslashs
 WCHAR szwRootFolder[MAX_PATH];
 
-// Path to the log file. This path is at the same level as the service executable. ex: C:/pasta/log.txt. <- both slashs are backslashs */
+//path to the log file. This path is at the same level as the service executable. ex: C:/pasta/log.txt. <- both slashs are backslashs */
 WCHAR szwLogFilePath[MAX_PATH];
 
 const WCHAR* szwServiceName = L"Javis";
@@ -17,13 +17,13 @@ computer stComputer = { 0 };
 */
 static VOID GetCaminhoServico() {
 
-	// fill in the full path
+	//fill in the full path
 	GetModuleFileNameW(0, szwRootFolder, MAX_PATH);
 
-	// get the last backslash
+	//get the last backslash
 	WCHAR* ultimaBarra = wcsrchr(szwRootFolder, L'\\');
 
-	// closes the program if the last backslash is not found. (how could this happen)?
+	//closes the program if the last backslash is not found. (how could this happen)?
 	if (ultimaBarra) {
 		*++ultimaBarra = L'\0';
 	}else {

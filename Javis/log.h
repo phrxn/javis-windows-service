@@ -9,7 +9,7 @@
 
 #include "javis.h"
 
-// size the buffers that will store text that will be saved in the log file.
+//size the buffers that will store text that will be saved in the log file.
 #define BUFFER_LOG_SIZE 4096
 #define BUFFER_LOG_HEADER_SIZE 200
 
@@ -40,7 +40,7 @@ VOID LogWinApi(const WCHAR* module, DWORD errorMessageID, const WCHAR* format, .
 
 
 /*
-    Formats the text que will be saved on the log file. This log is formed by: date, hour, log type, modulo name and any possible additional details.
+    Formats the text que will be saved on the log file. This log is formed by: date, hour, log type, module name and any possible additional details.
     ----
     bufferMsg - pointer to a buffer that will store the formatted text.
     type      - log type, see LOG_LEVEL for values. This value cannot be: LOG_ALL e LOG_OFF

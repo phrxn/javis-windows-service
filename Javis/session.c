@@ -146,7 +146,7 @@ VOID SetUserSession() {
 /*
 	Set the stComputer.iSession value, this method can set the connection type bits and the LogOff bit
 	----
-	isLoggedOff - TRUE if the bits that will be changed are of the connection type or FALSE if the bit that will be changed is the LogOff bit
+	isConnectionTypeBits - TRUE if the bits that will be changed are of the connection type or FALSE if the bit that will be changed is the LogOff bit
 	value - bits values
  */
 static VOID SetSession(BOOL isConnectionTypeBits, unsigned int value) {

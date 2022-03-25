@@ -10,30 +10,31 @@ void SetComputerIP(){
         https://docs.microsoft.com/en-us/windows/win32/api/iphlpapi/nf-iphlpapi-getadaptersaddresses
     */
 
-    // declare and initialize variables
+    //declare and initialize variables
     DWORD dwRetVal = 0;
 
-    // set the flags to pass to GetAdaptersAddresses
+    //set the flags to pass to GetAdaptersAddresses
     ULONG flags = GAA_FLAG_INCLUDE_PREFIX | GAA_FLAG_SKIP_ANYCAST | GAA_FLAG_SKIP_MULTICAST;
 
     ULONG family = AF_INET;
 
-    // allocate a 15 KB buffer to start with.
+    //allocate a 15 KB buffer to start with.
     ULONG outBufLen = WORKING_BUFFER_SIZE;
 
     PIP_ADAPTER_ADDRESSES pipAdpterAddresses = &ipAdpterAddresses[0],
                           pipAdpterAddressCurr = NULL;
+
     PIP_ADAPTER_UNICAST_ADDRESS pUnicast = NULL;
 
     SecureZeroMemory(pipAdpterAddresses, WORKING_BUFFER_SIZE);
 
-    // get adapters
+    //get adapters
     dwRetVal = GetAdaptersAddresses(family, flags, NULL, pipAdpterAddresses, &outBufLen);
 
     
     if (dwRetVal == NO_ERROR) {
 
-        // if successful, output some information from the data we received
+        //if successful, output some information from the data we received
         pipAdpterAddressCurr = pipAdpterAddresses;
 
         BOOL bIsLoopingContinue = TRUE;
